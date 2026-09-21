@@ -10,32 +10,43 @@ from dotenv import load_dotenv
 # Memuat variabel rahasia dari file .env secara otomatis
 load_dotenv()
 
-# ==================== PENGATURAN ADMIN VIA .ENV (BACK TO ORIGINAL) ====================
+# ==================== PENGATURAN ADMIN VIA .ENV (ORIGINAL MODEL) ====================
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-
-# 🔥 KEMBALI KE MODEL ORIGINAL ANDA: Menggunakan model pilihan Anda yang aktif
 MODEL_NAME = "openai/gpt-oss-20b"
 
 # ==================== KONFIGURASI HALAMAN ====================
+# 🔥 PERBAIKAN JUDUL: Mengubah nama aplikasi menjadi LifeSync AI murni
 st.set_page_config(
-    page_title="LifeSync", 
-    page_icon="💬", 
+    page_title="LifeSync AI", 
+    page_icon="🧠", 
     layout="centered"
 )
 
-# 🔥 FIX TOTAL CSS: MENGHAPUS PAKSA KOTAK ABU-ABU STREAMLIT & MENGUNCI JENDELA CHAT WA
+# 🔥 FULL RECONSTRUCTION MOBILE CSS: MENGAKTIFKAN SCROLL JEMPOL HP & ANTI-LOCK ELEMENT
 st.markdown("""
     <style>
-    /* Menyembunyikan elemen dekoratif bawaan Streamlit agar bersih total */
+    /* Menyembunyikan elemen dekoratif Streamlit agar bersih total */
     #MainMenu, footer, header {visibility: hidden;}
-    .block-container { max-width: 700px; padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    
+    /* Membuat container utama elastis mengikuti lebar layar HP/Laptop */
+    .block-container { 
+        max-width: 700px !important; 
+        padding-top: 0.5rem !important; 
+        padding-bottom: 2rem !important;
+    }
+    
+    /* 📱 MENGAKTIFKAN SENTUHAN DAN SCROLL JEMPOL SECARA ALAMI DI MOBILE HP */
+    html, body, [data-testid="stAppViewContainer"] {
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
     
     div[data-testid="stVerticalBlock"] > div {
         padding-top: 0px !important;
         padding-bottom: 0px !important;
     }
     
-    /* MENGHAPUS BACKGROUND ABU-ABU KAKU BAWAAN WIDGET STREAMLIT */
+    /* Menghapus paksa sekat abu-abu background bawaan tab Streamlit */
     div[data-testid="stTabs"] {
         background: transparent !important;
         border: none !important;
@@ -46,44 +57,45 @@ st.markdown("""
         padding: 0px !important;
     }
 
-    /* Wadah Utama Ruang Obrolan WhatsApp (Lebar Penuh, Bersih, & Tinggi Dikunci Ketat) */
+    /* Wadah Jendela Obrolan (Tinggi fleksibel & Scrollable Aktif di HP) */
     .chat-container {
         display: flex !important;
         flex-direction: column !important;
-        gap: 12px !important;
-        padding: 20px 15px !important;
+        gap: 10px !important;
+        padding: 15px 10px !important;
         background-color: #efeae2 !important; 
         background-image: url('https://githubusercontent.com') !important; 
         background-repeat: repeat !important;
         border-radius: 12px 12px 0px 0px !important;
-        height: 480px !important;
-        overflow-y: auto !important;
+        height: 440px !important;
+        overflow-y: scroll !important; /* Mengaktifkan scroll internal khusus chat */
+        -webkit-overflow-scrolling: touch !important;
         border: 1px solid #e9edef !important;
         border-bottom: none !important;
         margin-top: 10px !important;
         box-sizing: border-box !important;
     }
     
-    /* Pengaturan Baris Obrolan Kanan (User) & Kiri (AI) */
+    /* Struktur Baris Obrolan Kanan-Kiri */
     .chat-row {
         display: flex !important;
         width: 100% !important;
-        margin: 4px 0px !important;
+        margin: 3px 0px !important;
         background: transparent !important;
     }
     .user-row { justify-content: flex-end !important; }
     .ai-row { justify-content: flex-start !important; }
     
-    /* Gelembung Pesan Khas WA Web */
+    /* Gelembung Pesan */
     .wa-bubble {
         padding: 8px 12px 6px 12px !important;
         border-radius: 7.5px !important;
-        max-width: 75% !important;
-        font-size: 14.5px !important;
-        line-height: 1.45;
+        max-width: 80% !important;
+        font-size: 14px !important;
+        line-height: 1.4;
         color: #111b21 !important;
         box-shadow: 0 1px 0.5px rgba(11,20,26,.13) !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
     .user-bubble {
         background-color: #d9fdd3 !important;
@@ -96,7 +108,6 @@ st.markdown("""
         text-align: left !important;
     }
     
-    /* Indikator Jam Waktu & Centang Biru WA */
     .wa-meta {
         font-size: 10px !important;
         color: #667781 !important;
@@ -109,44 +120,39 @@ st.markdown("""
     }
     .wa-ticks { color: #53bdeb !important; font-weight: bold !important; }
 
-    /* Bar Pengetikan Kaki Bawah Sempurna Sejajar */
+    /* Bar Input Pengetikan Bawah Rata Menyamping Elegan */
     .wa-input-footer-bar {
         background-color: #f0f2f5 !important;
-        padding: 12px 16px !important;
+        padding: 10px 12px !important;
         border-radius: 0px 0px 12px 12px !important;
         border: 1px solid #e9edef !important;
         border-top: none !important;
-        margin-bottom: 20px !important;
+        margin-bottom: 15px !important;
     }
 
-    /* Custom Card Bersih untuk Halaman Keuangan */
+    /* Card untuk Halaman Finansial */
     .fin-card {
         background: #ffffff;
-        padding: 20px;
+        padding: 15px;
         border-radius: 12px;
         border: 1px solid #e9edef;
         box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        margin-bottom: 15px;
+        margin-bottom: 12px;
     }
     
-    /* Tombol Kirim Kustom */
+    /* Mengoptimalkan Tombol Sentuh di HP */
     .stButton>button {
         width: 100% !important;
         border-radius: 8px !important;
         font-weight: bold !important;
-        padding: 7px 0px !important;
-        transition: all 0.2s ease !important;
-    }
-    .stButton>button:hover {
-        transform: translateY(-1px) !important;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+        padding: 8px 0px !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # ==================== FUNGSI LOGIKA DATABASE MULTI-USER CLOUD SECURE ====================
 def get_user_filepaths(user_id, password):
-    """Menghasilkan file Excel unik berbasis gabungan ID dan Password agar aman di Cloud"""
+    """Menghasilkan file Excel unik berbasis gabungan ID dan Password agar aman di Cloud Proyek"""
     combined_string = f"{user_id}_{password}"
     safe_id = "".join(c for c in combined_string if c.isalnum() or c in ("_", "-")).lower()
     return f"{safe_id}_keuangan.xlsx", f"{safe_id}_diary.xlsx"
@@ -226,10 +232,10 @@ else:
     total_terpakai = 0.0
     sisa_saldo = 0.0
 
-st.sidebar.title("💬 Web Menu")
+st.sidebar.title("🧠 LifeSync AI Menu")
 halaman_aktif = st.sidebar.radio(
-    "Pindah Ruang Chat:",
-    ["💰 1. Asisten Finansial", "🌱 2. Cult Jurnal ", "📊 3. Pusat Unduhan Berkas"]
+    "Pindah Halaman:",
+    ["💰 1. Asisten Finansial", "🌱 2. Cult Jurnal (Chat)", "📊 3. Pusat Unduhan Berkas"]
 )
 
 # -------------------- HALAMAN 1: ASISTEN FINANSIAL --------------------
@@ -310,23 +316,23 @@ if halaman_aktif == "💰 1. Asisten Finansial":
                             st.error("API Key tidak ditemukan di file .env Anda!")
                     except Exception as e: st.error(f"Error AI: {e}")
         st.markdown('</div>', unsafe_allow_html=True)
-# -------------------- HALAMAN 2: KONSULTAN PSIKOLOGI (CHAT WA BERSIH & TERKUNCI) --------------------
-elif halaman_aktif == "🌱 2. Cult Jurnal (Chat WA)":
-    st.title("🌱 WhatsApp Web - Mind Care Counselor")
+# -------------------- HALAMAN 2: CULT JURNAL ASISTEN (CHAT MOBILE FRIENDLY) --------------------
+elif halaman_aktif == "🌱 2. Cult Jurnal (Chat)":
+    st.title("🌱 LifeSync AI - Mind Care Counselor")
     st.write("---")
     
     if not st.session_state.active_user_id or not st.session_state.active_user_pwd:
-        st.warning("🔒 Silakan masukkan ID Akun & Password Anda terlebih dahulu di sidebar sebelah kiri untuk membuka ruang obrolan curhat.")
+        st.warning("🔒 Silakan masukkan ID Akun & Password Anda terlebih dahulu di sidebar sebelah kiri untuk membuka ruang obrolan jurnal.")
     else:
         st.caption(f"Akun Aktif: **{st.session_state.active_user_id}**")
         
-        # 🗂️ JENDELA UTAMA RUANG OBROLAN WHATSAPP (KOTAK WALLPAPER UTUH)
+        # 🗂️ JENDELA UTAMA RUANG OBROLAN (KOTAK WALLPAPER DENGAN MOBILE SCROLL SCROLLABLE)
         st.markdown('<div class="chat-container">', unsafe_allow_html=True)
         
         if st.session_state.diary_history:
             # Mengurutkan riwayat agar chat terlama di atas dan chat terbaru di bawah
             for chat in reversed(st.session_state.diary_history):
-                waktu_format = chat['Waktu'][-8:-3] if 'Waktu' in chat else "12:37"
+                waktu_format = chat['Waktu'][-8:-3] if 'Waktu' in chat else "13:36"
                 
                 # 🟢 Tampilkan Gelembung Kanan (User / Kamu)
                 if chat.get('Cerita User'):
@@ -341,7 +347,7 @@ elif halaman_aktif == "🌱 2. Cult Jurnal (Chat WA)":
                         </div>
                     """, unsafe_allow_html=True)
                 
-                # ⚪ Tampilkan Gelembung Kiri (AI / Counselor) - DIKUNCI DI DALAM KONTEN WALLPAPER
+                # ⚪ Tampilkan Gelembung Kiri (AI / Counselor)
                 if chat.get('Respon AI'):
                     st.markdown(f"""
                         <div class="chat-row ai-row">
@@ -356,11 +362,11 @@ elif halaman_aktif == "🌱 2. Cult Jurnal (Chat WA)":
         else:
             st.markdown("""
                 <div style="display:flex; justify-content:center; align-items:center; height:100%; color:#667781; font-size:14px; font-family:sans-serif;">
-                    Belum ada percakapan. Mulai ketik pesan pertama Anda di bawah!
+                    Belum ada percakapan jurnal. Mulai ketik pesan pertama Anda di bawah!
                 </div>
             """, unsafe_allow_html=True)
             
-        st.markdown('</div>', unsafe_allow_html=True) # Kunci Penutup chat-container (Tag div aman berada di luar perulangan)
+        st.markdown('</div>', unsafe_allow_html=True) # Kunci Penutup chat-container
         # 📥 BAR INPUT PENGISI TEKS DI BAWAH CHAT ROOM (MURNI MENYAMPING SECARA SEIMBANG)
         st.markdown('<div class="wa-input-footer-bar">', unsafe_allow_html=True)
         col_mic, col_input, col_btn = st.columns([0.5, 5, 0.7])
@@ -401,7 +407,7 @@ elif halaman_aktif == "🌱 2. Cult Jurnal (Chat WA)":
                             ],
                             model=MODEL_NAME,
                         )
-                        # 🔥 FIX ERROR LIST: Mengakses indeks [0] dari properti choices sebelum memanggil message
+                        # 🔥 FIX ERROR LIST: Mengakses indeks dari properti choices sebelum memanggil message
                         ai_response = chat_completion.choices[0].message.content
                         waktu_sekarang = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         
