@@ -16,7 +16,7 @@ MODEL_NAME = "openai/gpt-oss-20b"
 
 # ==================== KONFIGURASI HALAMAN ====================
 st.set_page_config(
-    page_title="WhatsApp Web - LifeSync", 
+    page_title="LifeSync", 
     page_icon="💬", 
     layout="centered"
 )
@@ -227,7 +227,7 @@ else:
 st.sidebar.title("💬 Web Menu")
 halaman_aktif = st.sidebar.radio(
     "Pindah Ruang Chat:",
-    ["💰 1. Asisten Finansial", "🌱 2. Cult Jurnal (Chat WA)", "📊 3. Pusat Unduhan Berkas"]
+    ["💰 1. Asisten Finansial", "🌱 2. Cult Jurnal ", "📊 3. Pusat Unduhan Berkas"]
 )
 
 # -------------------- HALAMAN 1: ASISTEN FINANSIAL --------------------
