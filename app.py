@@ -224,7 +224,7 @@ else:
     total_terpakai = 0.0
     sisa_saldo = 0.0
 
-st.sidebar.title("💬 WhatsApp Menu")
+st.sidebar.title("💬 Web Menu")
 halaman_aktif = st.sidebar.radio(
     "Pindah Ruang Chat:",
     ["💰 1. Asisten Finansial", "🌱 2. Cult Jurnal (Chat WA)", "📊 3. Pusat Unduhan Berkas"]
