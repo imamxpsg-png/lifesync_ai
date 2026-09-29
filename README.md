@@ -83,12 +83,6 @@ This project prioritizes student data privacy and follows industry-standard secu
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for more details.
-
----
-
 <p align="center">
   <i>Developed with passion as a Portfolio Innovation for Applied AI Hackathons 🚀</i>
 </p>
