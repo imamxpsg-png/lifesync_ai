@@ -3,7 +3,6 @@
 [![Python](https://shields.io)](https://python.org)
 [![Streamlit](https://shields.io)](https://streamlit.io)
 [![Groq](https://shields.io)](https://groq.com)
-[![License: MIT](https://shields.io)](https://opensource.org)
 
 **LifeSync AI** is an intelligent, AI-powered assistant application designed to help university students navigate and manage the two most critical pillars of college life: **Financial Health (Pocket Care)** and **Mental Well-being (Mind Care)**. 
 
